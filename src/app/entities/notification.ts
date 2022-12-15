@@ -10,12 +10,12 @@ export class Notification {
     constructor(recipientId: string, 
                 category: string, 
                 content: NotificationContent,  
-                createdAt: Date, 
+                createdAt?: Date, 
                 readAt?: Date | null) {
         this._recipientId = recipientId;
         this._category = category;
         this._content = content;
-        this._createdAt = createdAt;
+        this._createdAt = createdAt ?? new Date();
         this._readAt = readAt;
     }
 
