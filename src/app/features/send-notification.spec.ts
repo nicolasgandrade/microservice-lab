@@ -17,6 +17,9 @@ const notificationRepository = {
             }
         });
     },
+    async countManyByRecipientId(recipientId: string) {
+        return 1;
+    }
 }
 
 describe('Send Notification', () => {

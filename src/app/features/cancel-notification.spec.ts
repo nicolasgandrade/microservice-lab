@@ -18,6 +18,9 @@ const notificationRepository = {
             }
         });
     },
+    async countManyByRecipientId(recipientId: string) {
+        return 1;
+    }
 }
 
 describe('Cancel Notification', () => {
