@@ -1,4 +1,5 @@
 import { Notification } from "../entities/notification";
+import { NotificationContent } from "../entities/notification-content";
 import { CancelNotification } from "./cancel-notification";
 import { NotificationNotFound } from "./errors/notification-not-found.error";
 
@@ -32,5 +33,19 @@ describe('Cancel Notification', () => {
         expect(() => {
             return cancelNotification.execute({ notificationId: 'fake-id'})
         }).rejects.toThrow(NotificationNotFound);
+    });
+
+    it('should find and cancel a notification', async () => {
+        const cancelNotification = new CancelNotification(notificationRepository);
+        notificationsMock.push(new Notification(
+            'fake-id',
+            'CAT1',
+            new NotificationContent('New Content')
+        ));
+        const id = notificationsMock[0].id;
+
+        await cancelNotification.execute({ notificationId: id });
+
+        expect(notificationsMock).toEqual([]);
     });
 });

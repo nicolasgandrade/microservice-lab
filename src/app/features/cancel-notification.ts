@@ -23,6 +23,6 @@ export class CancelNotification {
             throw new NotificationNotFound();
         }
 
-        this.notificationRepository.cancel(notificationId);
+        return this.notificationRepository.cancel(notificationId);
     }
 }
