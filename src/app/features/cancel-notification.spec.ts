@@ -1,5 +1,6 @@
 import { Notification } from "../entities/notification";
-import { SendNotification, SendNotificationRequest } from "./send-notification";
+import { CancelNotification } from "./cancel-notification";
+import { NotificationNotFound } from "./errors/notification-not-found.error";
 
 let notificationsMock: Notification[] = [];
 
@@ -19,21 +20,14 @@ const notificationRepository = {
     },
 }
 
-describe('Send Notification', () => {
-    beforeEach(() => {
-        notificationsMock = [];
-    });
+describe('Cancel Notification', () => {
+    beforeEach(() => notificationsMock = []);
 
-    it('should send a notification', async () => {
-        const sendNotification = new SendNotification(notificationRepository);
-        const sendNotificationRequest: SendNotificationRequest = {
-            recipientId: '1',
-            content: 'New Content',
-            category: 'CAT1'
-        };
+    it('should not find a notification', async () => {
+        const cancelNotification = new CancelNotification(notificationRepository);
 
-        await sendNotification.execute(sendNotificationRequest);
-
-        expect(notificationsMock).toHaveLength(1);
+        expect(() => {
+            return cancelNotification.execute({ notificationId: 'fake-id'})
+        }).rejects.toThrow(NotificationNotFound);
     });
 });
