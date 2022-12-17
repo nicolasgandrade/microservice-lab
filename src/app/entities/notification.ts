@@ -1,6 +1,9 @@
+import { randomUUID } from "crypto";
+
 import { NotificationContent } from "./notification-content";
 
 export class Notification {
+    private _id: string;
     private _recipientId: string;
     private _category: string;
     private _content: NotificationContent;
@@ -12,11 +15,16 @@ export class Notification {
                 content: NotificationContent,  
                 createdAt?: Date, 
                 readAt?: Date | null) {
+        this._id = randomUUID();
         this._recipientId = recipientId;
         this._category = category;
         this._content = content;
         this._createdAt = createdAt ?? new Date();
         this._readAt = readAt;
+    }
+
+    public get id(): string {
+        return this._id;
     }
 
     public get recipientId(): string {
